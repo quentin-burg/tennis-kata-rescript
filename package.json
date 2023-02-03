@@ -1,0 +1,22 @@
+{
+  "name": "rescript-project-template",
+  "version": "0.0.1",
+  "scripts": {
+    "res:build": "rescript build -with-deps",
+    "res:clean": "rescript clean",
+    "res:dev": "rescript build -w",
+    "test": "npm run res:build && mocha"
+  },
+  "keywords": [
+    "rescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "rescript": "*"
+  },
+  "devDependencies": {
+    "rescript-fast-check": "^1.1.1",
+    "rescript-mocha": "^0.9.0"
+  }
+}
