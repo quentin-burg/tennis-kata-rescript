@@ -17,6 +17,13 @@ let loveArb = constant(Love)
 let fifteenArb = constant(Fifteen)
 let thirtyArb = constant(Thirty)
 let pointArb = () => oneOf([loveArb, fifteenArb, thirtyArb])
+
+let pointsDataArb = () =>
+  record({
+    playerOne: pointArb(),
+    playerTwo: pointArb(),
+  })
+
 describe("Tooling functions", () => {
   it("Given PlayerOne when stringOfPlayer", () => stringOfPlayer(Player_one)->equal("Player 1"))
   it("Given PlayerTwo when stringOfPlayer", () => stringOfPlayer(Player_two)->equal("Player 2"))
@@ -44,8 +51,8 @@ describe("Transitions functions", () => {
       playerArb(),
       pointArb(),
       (winner, otherPoint) => {
-        let currentForty = Forty({player: winner, other_point: otherPoint})
-        score_when_forty(currentForty, winner) == Game(winner)
+        let currentFortyData = {player: winner, other_point: otherPoint}
+        score_when_forty(currentFortyData, winner) == Game(winner)
       },
     )
   })
@@ -55,8 +62,8 @@ describe("Transitions functions", () => {
       pointArb(),
       (winner, otherPoint) => {
         pre(otherPoint == Thirty)
-        let currentForty = Forty({player: other_player(winner), other_point: otherPoint})
-        score_when_forty(currentForty, winner) == Deuce
+        let currentFortyData = {player: other_player(winner), other_point: otherPoint}
+        score_when_forty(currentFortyData, winner) == Deuce
       },
     )
   })
@@ -66,13 +73,13 @@ describe("Transitions functions", () => {
       pointArb(),
       (winner, otherPoint) => {
         pre(otherPoint == Fifteen)
-        let currentForty = Forty({player: other_player(winner), other_point: otherPoint})
-        score_when_forty(currentForty, winner) ==
+        let currentFortyData = {player: other_player(winner), other_point: otherPoint}
+        score_when_forty(currentFortyData, winner) ==
           Forty({player: other_player(winner), other_point: Thirty})
       },
     )
   })
-  it("Given players at 0 or 15 points score kind is still POINTS", () => {
+  it("Given players at 0 or 15 points score is still POINTS", () => {
     ()
   })
   it("Given one player at 30 and win, score kind is forty", () => {()})

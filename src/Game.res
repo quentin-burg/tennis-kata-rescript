@@ -60,16 +60,11 @@ let incrementPoint = point => {
   }
 }
 
-let score_when_forty = (currentForty, winner) => {
-  switch currentForty {
-  | Forty(fortydata) =>
-    fortydata.player === winner
-      ? Game(winner)
-      : switch incrementPoint(fortydata.other_point) {
-        | Some(a) => Forty({...fortydata, other_point: a})
-        | None => Deuce
-        }
-
-  | score => score
-  }
+let score_when_forty = (currentFortydata, winner) => {
+  currentFortydata.player == winner
+    ? Game(winner)
+    : switch incrementPoint(currentFortydata.other_point) {
+      | Some(p) => Forty({...currentFortydata, other_point: p})
+      | None => Deuce
+      }
 }
